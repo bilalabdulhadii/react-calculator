@@ -8,3 +8,33 @@
     justify-content: center;
     align-items: center;
 }
+
+.calcBtn {
+    border: none;
+    cursor: pointer;
+    background: #a8aaac !important;
+    padding: 0 !important;
+    outline: none;
+    box-shadow: none !important;
+}
+
+.calcBtn:hover {
+    box-shadow: none !important;
+}
+
+.calcBtn .buttonSpan {
+    width: 100%;
+    display: block;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    background: #1976D2;
+    color: white;
+    transform: translateY(-0.3em);
+    transition: transform 0.1s ease;
+}
+
+.calcBtn:active .buttonSpan {
+    transform: translateY(0);
+}

@@ -1,20 +1,15 @@
 import "./App.css";
 import { ThemeProvider } from "@mui/material/styles";
 import { lightTheme } from "./theme";
-import {
-    CssBaseline,
-    Box,
-    Container,
-    Paper,
-    TextField,
-    Typography,
-    Grid,
-    Button,
-} from "@mui/material";
+import { CssBaseline, Box, Container } from "@mui/material";
 import { useState } from "react";
-import Toast from "./components/Toast";
+import { useToast } from "./context/ToastContext";
+import DisplayPanel from "./components/DisplayPanel";
+import Keypad from "./components/Keypad";
+import { evaluate } from "mathjs";
 
 function App() {
+    const { showTimedToast } = useToast();
     const [calc, setCalc] = useState({
         first: "",
         second: "",
@@ -22,38 +17,37 @@ function App() {
         result: "",
     });
 
-    const [toast, setToast] = useState({
-        show: false,
-        text: "",
-        type: "error",
-    });
+    const [input, setInput] = useState("");
+    const [result, setResult] = useState("");
 
-    const showToast = (text, type = "error", duration = 5000) => {
-        setToast({ show: true, text, type });
+    const handleEvaluate = () => {
+        try {
+            const result = evaluate(input);
+            setResult(result);
+        } catch {
+            setResult("Error");
+        }
+    };
 
-        setTimeout(() => {
-            setToast((prev) => ({ ...prev, show: false }));
-        }, duration);
+    const handleBackspace = () => {
+        setInput((prev) => prev.slice(0, -1));
     };
 
     const handleOperation = (opt) => {
         if (!calc.first || !calc.second) {
-            showToast("Please fill both numbers !", "error");
+            showTimedToast("Please fill both numbers !", "error");
             return;
         }
-        
         setCalc((prev) => ({ ...prev, opt }));
 
         const firstNum = parseFloat(calc.first);
         const secondNum = parseFloat(calc.second);
-
         if (isNaN(firstNum) || isNaN(secondNum)) {
-            showToast("Invalid number input!", "error");
+            showTimedToast("Invalid number input!", "error");
             return;
         }
 
         let result = 0;
-
         switch (opt) {
             case "add":
                 result = firstNum + secondNum;
@@ -67,7 +61,7 @@ function App() {
             case "div":
                 result =
                     secondNum === 0
-                        ? showToast("Cannot divide by zero!", "error")
+                        ? showTimedToast("Cannot divide by zero!", "error")
                         : firstNum / secondNum;
                 break;
             default:
@@ -77,6 +71,10 @@ function App() {
         if (result !== null) {
             setCalc((prev) => ({ ...prev, result }));
         }
+    };
+
+    const handleNumber = (num) => {
+        setInput((prev) => prev + num);
     };
 
     return (
@@ -96,106 +94,21 @@ function App() {
                             gap: "20px",
                         }}
                     >
-                        <Box
-                            component="form"
-                            sx={{
-                                display: "flex",
-                                gap: "10px",
-                                justifyContent: "center",
+                        <DisplayPanel result={input} />
+                        <DisplayPanel result={result} />
+                        <Keypad
+                            handleOperation={handleOperation}
+                            onClick={handleNumber}
+                            handleEvaluate={handleEvaluate}
+                            clear={() => {
+                                setResult("");
+                                setInput("");
                             }}
-                            noValidate
-                            autoComplete="off"
-                        >
-                            <TextField
-                                id="outlined-basic"
-                                label="First Number"
-                                variant="outlined"
-                                value={calc.first}
-                                onChange={(e) =>
-                                    setCalc({
-                                        ...calc,
-                                        first: e.target.value,
-                                    })
-                                }
-                                sx={{ width: "50%" }}
-                            />
-                            <TextField
-                                id="outlined-basic"
-                                label="Second Number"
-                                variant="outlined"
-                                value={calc.second}
-                                onChange={(e) =>
-                                    setCalc({
-                                        ...calc,
-                                        second: e.target.value,
-                                    })
-                                }
-                                sx={{ width: "50%" }}
-                            />
-                        </Box>
-                        <Paper
-                            variant="outlined"
-                            sx={{ padding: "10px", border: "1px solid #aaa", minHeight: "75px" }}
-                        >
-                            <Typography
-                                variant="h4"
-                                sx={{ textAlign: "center" }}
-                            >
-                                {calc.result}
-                            </Typography>
-                        </Paper>
-                        <Box sx={{ width: "100%" }}>
-                            <Grid container spacing={2}>
-                                <Grid size={6}>
-                                    <Button
-                                        variant="contained"
-                                        sx={{ width: "100%" }}
-                                        onClick={() => handleOperation("add")}
-                                    >
-                                        +
-                                    </Button>
-                                </Grid>
-                                <Grid size={6}>
-                                    <Button
-                                        variant="contained"
-                                        sx={{ width: "100%" }}
-                                        onClick={() => handleOperation("sub")}
-                                    >
-                                        -
-                                    </Button>
-                                </Grid>
-                                <Grid size={6}>
-                                    <Button
-                                        variant="contained"
-                                        sx={{ width: "100%" }}
-                                        onClick={() => handleOperation("mul")}
-                                    >
-                                        *
-                                    </Button>
-                                </Grid>
-                                <Grid size={6}>
-                                    <Button
-                                        variant="contained"
-                                        sx={{ width: "100%" }}
-                                        onClick={() => handleOperation("div")}
-                                    >
-                                        /
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Box>
+                            handleBackspace={handleBackspace}
+                        />
                     </Box>
                 </Container>
             </div>
-            {toast.show && (
-                <Toast
-                    text={toast.text}
-                    type={toast.type}
-                    onClose={() =>
-                        setToast((prev) => ({ ...prev, show: false }))
-                    }
-                />
-            )}
         </ThemeProvider>
     );
 }

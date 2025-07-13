@@ -6,8 +6,8 @@ const sharedSettings = {
         fontFamily: "Roboto, sans-serif",
         button: {
             textTransform: "none",
-            fontWeight: 500,
-            fontSize: "1rem",
+            fontWeight: 600,
+            fontSize: "1.2rem",
         },
     },
     shape: {
@@ -16,12 +16,10 @@ const sharedSettings = {
     components: {
         MuiButton: {
             styleOverrides: {
-                root: {
-                    transition: "all 0.2s ease-in-out",
-                    "&:active": {
-                        transform: "scale(0.95)",
-                    },
-                },
+                root: {},
+            },
+            defaultProps: {
+                disableRipple: true,
             },
         },
         MuiPaper: {

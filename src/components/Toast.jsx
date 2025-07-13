@@ -1,11 +1,11 @@
-export default function Toast({ text, type, onClose }) {
+export default function Toast({ toast, onClose }) {
     const bgColor =
         {
             error: "#e44336",
             success: "#4caf50",
             info: "#2196f3",
             warning: "#ff9800",
-        }[type] || "#333";
+        }[toast.type] || "#333333";
     return (
         <div
             style={{
@@ -24,7 +24,7 @@ export default function Toast({ text, type, onClose }) {
                 minWidth: "200px",
             }}
         >
-            <span>{text}</span>
+            <span>{toast.message}</span>
             <button
                 onClick={onClose}
                 style={{
