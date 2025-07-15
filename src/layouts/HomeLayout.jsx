@@ -104,7 +104,7 @@ export default function HomeLayout({ children }) {
                                 component="div"
                                 sx={{ flexGrow: 1 }}
                             >
-                                Caluclator
+                                Calculator
                             </Typography>
                         </Toolbar>
                     </AppBar>

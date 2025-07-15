@@ -108,12 +108,12 @@ export default function Home() {
             sx={{
                 bgcolor: "#e5e6e7",
                 padding: "20px",
-                width: "100%",
                 borderRadius: "12px",
                 boxShadow: "5px 5px 0px #a8aaac",
                 display: "flex",
                 flexDirection: "column",
                 gap: "20px",
+                boxSizing:"border-box"
             }}
         >
             <DisplayPanel input={input} result={result} />
