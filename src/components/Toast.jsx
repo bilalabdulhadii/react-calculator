@@ -17,7 +17,7 @@ export default function Toast({ toast, onClose }) {
                 right: "20px",
                 borderRadius: "8px",
                 boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
-                zIndex: 1000,
+                zIndex: 10000,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",

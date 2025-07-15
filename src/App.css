@@ -24,12 +24,16 @@
 
 .calcBtn .buttonSpan {
     width: 100%;
-    display: block;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding-top: 8px;
     padding-bottom: 8px;
     box-sizing: border-box;
     border-radius: 12px;
-    background: #1976D2;
+    background: #1976d2;
     color: white;
     transform: translateY(-0.3em);
     transition: transform 0.1s ease;
@@ -37,4 +41,16 @@
 
 .calcBtn:active .buttonSpan {
     transform: translateY(0);
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
 }

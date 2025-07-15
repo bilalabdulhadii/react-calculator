@@ -14,7 +14,7 @@ export const ToastProvider = ({ children }) => {
         setToast({ show: true, message, type });
     };
 
-    const showTimedToast = (message, type = "error", duration = 3000) => {
+    const showTimedToast = (message, type = "error", duration = 5000) => {
         setToast({ show: true, message, type });
 
         setTimeout(() => {
