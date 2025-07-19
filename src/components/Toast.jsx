@@ -1,3 +1,4 @@
+
 export default function Toast({ toast, onClose }) {
     const bgColor =
         {
@@ -10,11 +11,12 @@ export default function Toast({ toast, onClose }) {
         <div
             style={{
                 padding: "10px 16px",
+                marginRight:"20px",
                 backgroundColor: bgColor,
                 color: "white",
                 position: "fixed",
-                top: "20px",
-                right: "20px",
+                bottom: "20px",
+                left: "20px",
                 borderRadius: "8px",
                 boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
                 zIndex: 10000,

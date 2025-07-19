@@ -13,7 +13,7 @@ export default function KeypadNumberButton({ text, onClick }) {
             }}
             onClick={onClick}
         >
-            <span class="buttonSpan">{text}</span>
+            <span className="buttonSpan">{text}</span>
         </Button>
     );
 }

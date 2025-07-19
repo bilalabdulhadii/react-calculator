@@ -15,11 +15,10 @@ import {
     ListSubheader,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import toolsList from "../toolsList";
+import { Link, Outlet } from "react-router-dom";
 
-import CalculateIcon from "@mui/icons-material/Calculate";
-
-
-export default function HomeLayout({ children }) {
+export default function HomeLayout() {
     const [open, setOpen] = useState(false);
 
     const toggleDrawer = (open) => (event) => {
@@ -57,36 +56,48 @@ export default function HomeLayout({ children }) {
                     </ListSubheader>
                 }
             >
-                <ListItem disablePadding>
-                    <ListItemButton
-                        sx={{
-                            borderRadius: 1,
-                            px: 1.5,
-                            "&:hover": {
-                                bgcolor: "primary.light",
-                                color: "primary.contrastText",
-                            },
-                        }}
-                    >
-                        <ListItemIcon sx={{ color: "inherit", minWidth: 40 }}>
-                            <CalculateIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Calculator" />
-                    </ListItemButton>
-                </ListItem>
+                {toolsList
+                    .filter((tool) => tool.isActive)
+                    .map((tool) => (
+                        <ListItem disablePadding key={tool.id}>
+                            <ListItemButton
+                                sx={{
+                                    borderRadius: 1,
+                                    px: 1.5,
+                                    "&:hover": {
+                                        bgcolor: "primary.light",
+                                        color: "primary.contrastText",
+                                    },
+                                }}
+                                component={Link}
+                                to={tool.path}
+                            >
+                                <ListItemIcon
+                                    sx={{ color: "inherit", minWidth: 40 }}
+                                >
+                                    {tool.icon}
+                                </ListItemIcon>
+                                <ListItemText primary={tool.title} />
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
             </List>
         </Box>
     );
 
     return (
-        <>
-            <Box
-                sx={{
-                    width: "100%",
-                    minHeight: "100vh",
-                }}
-            >
-                <Container maxWidth="sm" sx={{marginTop:"200px"}}>
+        <Box
+            sx={{
+                width: "100%",
+                minHeight: "100vh",
+                bgcolor: (theme) => theme.palette.background.default,
+            }}
+        >
+            <Box>
+                <Container
+                    maxWidth="md"
+                    sx={{ marginTop: "150px", marginBottom: "150px" }}
+                >
                     <AppBar position="fixed">
                         <Toolbar>
                             <IconButton
@@ -100,15 +111,22 @@ export default function HomeLayout({ children }) {
                                 <MenuIcon />
                             </IconButton>
                             <Typography
-                                variant="h6"
-                                component="div"
-                                sx={{ flexGrow: 1 }}
+                                variant="h5"
+                                component={Link}
+                                sx={{
+                                    flexGrow: 1,
+                                    userSelect: "none",
+                                    cursor: "pointer",
+                                    textDecoration:"none",
+                                    color:"#ffffff"
+                                }}
+                                to="/"
                             >
                                 Calculator
                             </Typography>
                         </Toolbar>
                     </AppBar>
-                    {children}
+                    <Outlet />
                 </Container>
             </Box>
 
@@ -120,6 +138,6 @@ export default function HomeLayout({ children }) {
             >
                 {drawerContent}
             </SwipeableDrawer>
-        </>
+        </Box>
     );
 }

@@ -1,5 +1,5 @@
 import { Box, Typography, Modal, IconButton } from "@mui/material";
-import { useToast } from "../contexts/ToastContext";
+import { useToast } from "../../contexts/ToastContext";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 
 export default function HistoryModal({ openModal, onClose }) {

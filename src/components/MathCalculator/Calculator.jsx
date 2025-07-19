@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import DisplayPanel from "../components/DisplayPanel";
-import Keypad from "../components/Keypad";
-import { useToast } from "../contexts/ToastContext";
+import DisplayPanel from "./DisplayPanel";
+import Keypad from "./Keypad";
+import { useToast } from "../../contexts/ToastContext";
 import { useState } from "react";
 import { evaluate } from "mathjs";
 
@@ -104,26 +104,29 @@ export default function Home() {
     };
 
     return (
-        <Box
-            sx={{
-                bgcolor: "#e5e6e7",
-                padding: "20px",
-                borderRadius: "12px",
-                boxShadow: "5px 5px 0px #a8aaac",
-                display: "flex",
-                flexDirection: "column",
-                gap: "20px",
-                boxSizing:"border-box"
-            }}
-        >
-            <DisplayPanel input={input} result={result} />
-            <Keypad
-                result={result}
-                onClick={handleInput}
-                handleEvaluate={handleEvaluate}
-                clear={handleClear}
-                handleBackspace={handleBackspace}
-            />
+        <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+            <Box
+                sx={{
+                    bgcolor: "#e5e6e7",
+                    padding: "20px",
+                    borderRadius: "12px",
+                    boxShadow: "5px 5px 0px #a8aaac",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "20px",
+                    boxSizing: "border-box",
+                    maxWidth: "500px",
+                }}
+            >
+                <DisplayPanel input={input} result={result} />
+                <Keypad
+                    result={result}
+                    onClick={handleInput}
+                    handleEvaluate={handleEvaluate}
+                    clear={handleClear}
+                    handleBackspace={handleBackspace}
+                />
+            </Box>
         </Box>
     );
 }
