@@ -116,9 +116,8 @@ export default function Home() {
                     gap: "20px",
                     boxSizing: "border-box",
                     maxWidth: "500px",
-                    margin: "15% 20px 0",
-                }}
-            >
+                    margin: "20px 0 40px",
+                }}>
                 <DisplayPanel input={input} result={result} />
                 <Keypad
                     result={result}
